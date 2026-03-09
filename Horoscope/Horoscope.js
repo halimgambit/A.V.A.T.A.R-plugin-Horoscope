@@ -11,13 +11,17 @@ export async function action(data, callback) {
 
 		info("Horoscope:", data.action.command, L.get("plugin.from"), data.client);
 
-		if (tblActions[data.action.command]) {
-			await tblActions[data.action.command]();
-		}
+		const command = tblActions[data.action.command];
+
+		if (command) await command();
+		else callback();
 
 	} catch (err) {
+
+		error("Horoscope:", err.message);
+
 		if (data.client) Avatar.Speech.end(data.client);
-		if (err.message) error(err.message);
+
 		callback();
 	}
 }
@@ -25,48 +29,92 @@ export async function action(data, callback) {
 
 async function getSign(data, client, callback) {
 
-	const zodiaques = /(bélier|taureau|gémeaux|cancer|lion|vierge|balance|scorpion|sagittaire|capricorne|verseau|poissons?)/gi;
+	const sentence = data?.action?.rawSentence?.toLowerCase() || "";
 
-	const match = data.action.rawSentence.match(zodiaques);
-	let signe = match ? match[0].toLowerCase() : null;
+	const SIGNS = {
+		"bélier": "belier",
+		"belier": "belier",
+		"taureau": "taureau",
+		"gémeaux": "gemeaux",
+		"gemeaux": "gemeaux",
+		"cancer": "cancer",
+		"lion": "lion",
+		"vierge": "vierge",
+		"balance": "balance",
+		"scorpion": "scorpion",
+		"sagittaire": "sagittaire",
+		"capricorne": "capricorne",
+		"verseau": "verseau",
+		"poissons": "poissons",
+		"poisson": "poissons"
+	};
 
-	if (signe === "poisson") {
-        signe = "poissons";
-    }
+	let signe = null;
+
+	for (const key in SIGNS) {
+		if (sentence.includes(key)) {
+			signe = key;
+			break;
+		}
+	}
 
 	if (!signe) {
-		Avatar.speak("Je n'ai pas compris le signe que tu recherches.", client, () => {
-			Avatar.Speech.end(client);
-			callback();
-		});
-		return;
+
+		return Avatar.speak(
+			"Je connais les douze signes du zodiaque. Vous pouvez me demander par exemple : quel est l'horoscope du bélier, ou l'horoscope du lion pour demain.",
+			client,
+			() => {
+				Avatar.Speech.end(client);
+				callback();
+			}
+		);
 	}
+
+	const demain = sentence.includes("demain");
+	const jour = demain ? "demain" : "aujourdhui";
 
 	try {
 
-		const response = await fetch(`https://www.horoscope.fr/horoscopes/aujourdhui/${signe.replace("é", "e")}`);
+		const signeURL = SIGNS[signe];
 
-		if (!response.ok) {
-			throw new Error(`Erreur HTTP ${response.status}`);
-		}
+		const url = `https://www.horoscope.fr/horoscopes/${jour}/${signeURL}`;
+
+		const response = await fetch(url);
+
+		if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
 		const html = await response.text();
 		const $ = cheerio.load(html);
 
-		const texte = $("#wellbeing p").first().text().trim();
+		let texte =
+			$("#wellbeing p").first().text().trim() ||
+			$("article p").first().text().trim();
 
 		if (!texte) throw new Error("Horoscope introuvable");
 
-		Avatar.speak(`Voici l'horoscope du ${signe}. ${texte}`, client, () => {
+		// nettoyage texte pour TTS
+		texte = texte.replace(/\s+/g, " ");
+
+		const intro = demain
+			? `Voici l'horoscope pour demain ${signe}.`
+			: `Voici l'horoscope du jour ${signe}.`;
+
+		Avatar.speak(`${intro} ${texte}`, client, () => {
 			Avatar.Speech.end(client);
 			callback();
 		});
 
 	} catch (err) {
 
-		Avatar.speak("Impossible de récupérer l'horoscope.", client, () => {
-			Avatar.Speech.end(client);
-			callback();
-		});
+		error("Horoscope:", err.message);
+
+		Avatar.speak(
+			"Je n'arrive pas à récupérer l'horoscope pour le moment.",
+			client,
+			() => {
+				Avatar.Speech.end(client);
+				callback();
+			}
+		);
 	}
 }
