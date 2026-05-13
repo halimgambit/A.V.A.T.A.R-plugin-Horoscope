@@ -6,28 +6,29 @@ export async function action(data, callback) {
 	try {
 
 		const tblActions = {
-			getSign: () => getSign(data, data.client, callback)
+			getSign: () => getSign(data, data.client)
 		};
 
 		info("Horoscope:", data.action.command, L.get("plugin.from"), data.client);
 
-		const command = tblActions[data.action.command];
-
-		if (command) await command();
-		else callback();
+		if (tblActions[data.action.command]) {
+			await tblActions[data.action.command]();
+		}
 
 	} catch (err) {
-
-		error("Horoscope:", err.message);
-
-		if (data.client) Avatar.Speech.end(data.client);
+		error("Erreur Horoscope:", err.message);
+		Avatar.speak(
+			"Erreur Horoscope",
+			data.client,
+			() => Avatar.Speech.end(data.client)
+		);
+	}
 
 		callback();
 	}
-}
 
 
-async function getSign(data, client, callback) {
+async function getSign(data, client) {
 
 	const sentence = data?.action?.rawSentence?.toLowerCase() || "";
 
@@ -65,7 +66,6 @@ async function getSign(data, client, callback) {
 			client,
 			() => {
 				Avatar.Speech.end(client);
-				callback();
 			}
 		);
 	}
@@ -99,21 +99,17 @@ async function getSign(data, client, callback) {
 			? `Voici l'horoscope pour demain ${signe}.`
 			: `Voici l'horoscope du jour ${signe}.`;
 
-		Avatar.speak(`${intro} ${texte}`, client, () => {
+		Avatar.speak(`${intro} ${texte}`,
+			client, () => {
 			Avatar.Speech.end(client);
-			callback();
 		});
 
 	} catch (err) {
-
 		error("Horoscope:", err.message);
-
 		Avatar.speak(
 			"Je n'arrive pas à récupérer l'horoscope pour le moment.",
-			client,
-			() => {
+			client, () => {
 				Avatar.Speech.end(client);
-				callback();
 			}
 		);
 	}
