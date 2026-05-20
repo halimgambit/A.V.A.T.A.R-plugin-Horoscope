@@ -5,6 +5,4 @@
 
 - le regle: quel est le signe/l'horoscope du lion , ou l'horoscope du capricorne pour demain
 
-<p align="center">
-  <img src="Horoscope/assets/images/Horoscope.png" alt="Horoscope" />
-</p>
+![Horoscope](Horoscope/assets/images/Horoscope.png)
