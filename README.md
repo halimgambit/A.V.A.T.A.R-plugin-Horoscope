@@ -4,7 +4,11 @@
 
 - Avatar donne les signes astrologique pour le jour et demain
 
-- les régles sont quel est/donne moi l'horoscope du sagitaire , l'horoscope du lion pour demain.
+ ## 🎯 Usage
+Commandes :
+- quel est l'horoscope du sagitaire
+- donne moi l'horoscope du sagitaire
+- l'horoscope du lion pour demain
 
 ## Multi-room
 
