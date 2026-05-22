@@ -8,11 +8,11 @@
 
 ## Multi-room
 
-The `Blague` plugin is fully multi-room.
+The `Horoscope` plugin is fully multi-room.
 
 ## Multi-language
 
-The `Blague` plugin relies solely on the system's available languages.
+The `Horoscope` plugin relies solely on the system's available languages.
 
  <table style="border: none;">
   <tr>
