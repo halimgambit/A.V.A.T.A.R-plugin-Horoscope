@@ -6,4 +6,12 @@
 
 - les régles sont quel est/donne moi l'horoscope du sagitaire , l'horoscope du lion pour demain
 
-- <img src="Horoscope/assets/images/Horoscope.png" alt="Horoscope" width="300" />
+ <table style="border: none;">
+  <tr>
+    <td style="border: none;"><img src="Horoscope/assets/images/Horoscope.png" alt="Horoscope Logo" width="120"></td>
+    <td style="border: none;">
+      <h1 style="margin: 0;color: brown;">Sonos Player</h1>
+      <h3 style="margin: 0;">Control Your Music with Your Voice</h3>
+    </td>
+  </tr>
+</table>
