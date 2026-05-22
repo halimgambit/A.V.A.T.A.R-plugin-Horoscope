@@ -23,7 +23,7 @@ The `Horoscope` plugin relies solely on the system's available languages.
     <td style="border: none;"><img src="Horoscope/assets/images/Horoscope.png" alt="Horoscope Logo" width="120"></td>
     <td style="border: none;">
       <h1 style="margin: 0;color: brown;">Horoscope</h1>
-      <h3 style="margin: 0;">Get Signs</h3>
+      <h3 style="margin: 0;">Give Signs</h3>
     </td>
   </tr>
 </table>
