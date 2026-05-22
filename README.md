@@ -10,8 +10,8 @@
   <tr>
     <td style="border: none;"><img src="Horoscope/assets/images/Horoscope.png" alt="Horoscope Logo" width="120"></td>
     <td style="border: none;">
-      <h1 style="margin: 0;color: brown;">Sonos Player</h1>
-      <h3 style="margin: 0;">Control Your Music with Your Voice</h3>
+      <h1 style="margin: 0;color: brown;">Horoscope</h1>
+      <h3 style="margin: 0;">Get Signs</h3>
     </td>
   </tr>
 </table>
