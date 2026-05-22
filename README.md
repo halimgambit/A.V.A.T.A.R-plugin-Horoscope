@@ -4,7 +4,15 @@
 
 - Avatar donne les signes astrologique pour le jour et demain
 
-- les régles sont quel est/donne moi l'horoscope du sagitaire , l'horoscope du lion pour demain
+- les régles sont quel est/donne moi l'horoscope du sagitaire , l'horoscope du lion pour demain.
+
+## Multi-room
+
+The `Blague` plugin is fully multi-room.
+
+## Multi-language
+
+The `Blague` plugin relies solely on the system's available languages.
 
  <table style="border: none;">
   <tr>
