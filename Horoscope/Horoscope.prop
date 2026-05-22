@@ -1,0 +1,12 @@
+{
+	"modules": { 
+		"Horoscope": {
+			"version": "1.0",
+			"name": "astrologie",
+			"rules": {
+				"getSign": ["horoscope","sign"]
+			}
+		}
+	}
+}
+			
