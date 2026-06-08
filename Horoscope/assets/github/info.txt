@@ -1,0 +1,24 @@
+## 🔮 Horoscope
+
+Le plugin **Horoscope** vous permet de consulter facilement les prévisions astrologiques selon votre signe du zodiaque.
+
+### ✨ Fonctionnalités principales
+
+* **Horoscope quotidien** : découvrez les tendances du jour en amour, travail et bien-être
+* **Tous les signes disponibles** : accédez aux prévisions pour les 12 signes astrologiques
+* **Contenu inspirant** : recevez des conseils et des indications pour mieux aborder votre journée
+
+### 🗣️ Utilisation
+
+Vous pouvez :
+
+* Consulter votre horoscope (ex : “Quel est l'horoscope du sagittaire pour aujourd’hui ?”)
+* Demander un signe spécifique (ex : “Horoscope du Lion”)
+* Demander un signe spécifique (ex : “Horoscope du Lion pour demain”)
+
+### 🎯 Objectif
+
+Offrir un moment de guidance et d’inspiration au quotidien grâce à l’astrologie.
+
+Simple, rapide et accessible à tout moment.
+
