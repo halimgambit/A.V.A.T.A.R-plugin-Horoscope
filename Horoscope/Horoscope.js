@@ -15,7 +15,7 @@ export async function action(data, callback) {
             getSign: () => getSign(data, data.client, Locale)
         };
 
-        info("Horoscope:", data.action.command, Locale.get("plugin.from"), data.client);
+        info("Horoscope:", data.action.command, "from", data.client);
 
         if (tblActions[data.action.command]) {
             await tblActions[data.action.command]();
@@ -31,27 +31,11 @@ export async function action(data, callback) {
 }
 
 
-async function getSign(data, client, Locale) {
+const getSign = async (data, client, Locale) => {
 
-    const sentence = data?.action?.rawSentence?.toLowerCase() || "";
+    let sentence = (data.action?.rawSentence || data.action?.sentence || "").toLowerCase();
 
-    const SIGNS = {
-        "bélier": "belier",
-        "belier": "belier",
-        "taureau": "taureau",
-        "gémeaux": "gemeaux",
-        "gemeaux": "gemeaux",
-        "cancer": "cancer",
-        "lion": "lion",
-        "vierge": "vierge",
-        "balance": "balance",
-        "scorpion": "scorpion",
-        "sagittaire": "sagittaire",
-        "capricorne": "capricorne",
-        "verseau": "verseau",
-        "poissons": "poissons",
-        "poisson": "poissons"
-    };
+const SIGNS = Locale.pak.signs;
 
     let signe = null;
 
@@ -63,10 +47,8 @@ async function getSign(data, client, Locale) {
     }
 
     if (!signe) {
-		return Avatar.speak(Locale.get("speech.unknownSign"), client, () => {
-                Avatar.Speech.end(client);
-            }
-        );
+        info(Locale.get("speech.unknownSign"));
+		return Avatar.speak(Locale.get("speech.unknownSign"), client, () => Avatar.Speech.end(client));
     }
 
     const demain = sentence.includes("demain");
@@ -98,20 +80,14 @@ async function getSign(data, client, Locale) {
 
         texte = texte.replace(/\s+/g, " ");
 
-        const intro = demain
-            ? Locale.get(["speech.tomorrow", signe])
-            : Locale.get(["speech.today", signe]);
+        const intro = demain ? Locale.get("speech.tomorrow", signe) : Locale.get("speech.today", signe);
 
-        Avatar.speak(`${intro} ${texte}`, client, () => {
-                Avatar.Speech.end(client);
-            }
-        );
+        info(`${intro} ${texte}`);
+
+        Avatar.speak(`${intro} ${texte}`, client, () => Avatar.Speech.end(client));
 
     } catch (err) {
         error("Horoscope:", err.message);
-        Avatar.speak(Locale.get("speech.errorFetch"), client, () => {
-                Avatar.Speech.end(client);
-            }
-        );
+        Avatar.speak(Locale.get("speech.errorFetch"), client, () => Avatar.Speech.end(client));
     }
 }
