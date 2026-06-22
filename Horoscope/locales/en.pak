@@ -1,13 +1,23 @@
 {
-  "plugin": {
-    "from": "from"
-  },
-
-  "speech": {
-    "unknownSign": "I know the twelve zodiac signs. You can ask for example: what is the horoscope for Aries, or Leo for tomorrow.",
-    "today": "Here is today's horoscope for $$.",
-    "tomorrow": "Here is tomorrow's horoscope for $$.",
+  speech: {
+    "unknownSign": "I know the twelve signs of the zodiac. You can ask me, for example: what is the horoscope of the ram, or the horoscope of the lion for tomorrow."
+    "today": "Here is the daily horoscope $$.",
+    "tomorrow": "Here is the horoscope for tomorrow $$.",
     "error": "Horoscope error",
-    "errorFetch": "I can't retrieve the horoscope right now."
+    "errorFetch": "I can’t retrieve the horoscope yet."
+  },
+  "signs": {
+    "ram": "belier",
+    "bull": "bull",
+    "gemini": "gemeaux",
+    cancer: "cancer",
+    "lion: "lion",
+    "virgin": "virgin",
+    "balance": "balance",
+    "scorpion": "scorpion",
+    "sagittarius": "sagittarius",
+    "capricorn": "capricorn",
+    "Aquarius": "Aquarius",
+    "fish": "fish"
   }
 }
