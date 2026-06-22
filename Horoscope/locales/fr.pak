@@ -1,13 +1,26 @@
 {
-  "plugin": {
-    "from": "de"
-  },
-
   "speech": {
     "unknownSign": "Je connais les douze signes du zodiaque. Vous pouvez me demander par exemple : quel est l'horoscope du bélier, ou l'horoscope du lion pour demain.",
     "today": "Voici l'horoscope du jour $$.",
     "tomorrow": "Voici l'horoscope pour demain $$.",
     "error": "Erreur Horoscope",
     "errorFetch": "Je n'arrive pas à récupérer l'horoscope pour le moment."
+  },
+  "signs": {
+    "bélier": "belier",
+    "belier": "belier",
+    "taureau": "taureau",
+    "gémeaux": "gemeaux",
+    "gemeaux": "gemeaux",
+    "cancer": "cancer",
+    "lion": "lion",
+    "vierge": "vierge",
+    "balance": "balance",
+    "scorpion": "scorpion",
+    "sagittaire": "sagittaire",
+    "capricorne": "capricorne",
+    "verseau": "verseau",
+    "poissons": "poissons",
+    "poisson": "poissons"
   }
 }
