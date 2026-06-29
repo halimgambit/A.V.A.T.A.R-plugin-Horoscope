@@ -12,30 +12,31 @@ export async function action(data, callback) {
         const Locale = await Avatar.lang.getPak('Horoscope', data.language);
 
         const tblActions = {
-            getSign: () => getSign(data, data.client, Locale)
+            getSign: () => getSign(data, data.client, Locale, callback)
         };
 
         info("Horoscope:", data.action.command, "from", data.client);
 
         if (tblActions[data.action.command]) {
-            await tblActions[data.action.command]();
-        }
+                await tblActions[data.action.command]();
+            } else {
+                callback();
+            }
 
     } catch (err) {
         error("Erreur Horoscope:", err.message);
-        Avatar.speak(Locale.get("speech.error"), data.client, () => Avatar.Speech.end(data.client)
-        );
+        Avatar.speak(Locale.get(["speech.error"]), data.client, () => {
+            callback();
+        });
     }
-
-    callback();
 }
 
 
-const getSign = async (data, client, Locale) => {
+const getSign = async (data, client, Locale, callback) => {
 
     let sentence = (data.action?.rawSentence || data.action?.sentence || "").toLowerCase();
-
-const SIGNS = Locale.pak.signs;
+    
+    const SIGNS = Locale.pak.signs;
 
     let signe = null;
 
@@ -47,8 +48,10 @@ const SIGNS = Locale.pak.signs;
     }
 
     if (!signe) {
-        info(Locale.get("speech.unknownSign"));
-		return Avatar.speak(Locale.get("speech.unknownSign"), client, () => Avatar.Speech.end(client));
+        info(Locale.get(["speech.unknownSign"]));
+		return Avatar.speak(Locale.get(["speech.unknownSign"]), client, () => {
+           callback();
+        });
     }
 
     const demain = sentence.includes("demain");
@@ -70,24 +73,26 @@ const SIGNS = Locale.pak.signs;
 
         const $ = cheerio.load(html);
 
-        let texte =
-            $("#wellbeing p").first().text().trim() ||
-            $("article p").first().text().trim();
+        let texte = $("#wellbeing p").first().text().trim() || $("article p").first().text().trim();
 
         if (!texte) {
-            throw new Error("Horoscope introuvable");
+            throw new Error(Locale.get(["speech.newError"]));
         }
 
         texte = texte.replace(/\s+/g, " ");
 
-        const intro = demain ? Locale.get("speech.tomorrow", signe) : Locale.get("speech.today", signe);
+        const intro = demain ? Locale.get(["speech.tomorrow", signe]) : Locale.get(["speech.today", signe]);
 
         info(`${intro} ${texte}`);
 
-        Avatar.speak(`${intro} ${texte}`, client, () => Avatar.Speech.end(client));
+        Avatar.speak(`${intro} ${texte}`, client, () => {
+            callback();
+        });
 
     } catch (err) {
         error("Horoscope:", err.message);
-        Avatar.speak(Locale.get("speech.errorFetch"), client, () => Avatar.Speech.end(client));
+        Avatar.speak(Locale.get(["speech.errorFetch"]), client, () => {
+           callback();
+        });
     }
 }
